@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reactで作ったToDoリスト</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.8.2/css/bulma.min.css" />
+  <link href="./css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+  <div id="root"></div>
+
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classnames/2.2.6/index.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+
+  const TodoApp = () => {
+    const [value,setValue] = React.useState('');
+    const [todoList,setTodoList] = React.useState([]);
+
+    const ListAdd = e => {
+      const newValue = e.target.value;
+      setValue(newValue);
+    };
+
+    const Add = () => {
+      const newTodo = [...todoList,value];
+      setTodoList(newTodo);
+      setValue('');
+    };
+
+    return(
+      <div class="wrap">
+        <h2>ToDoリスト</h2>
+        <div class="form">
+          <input 
+            type="text" 
+            value={value} 
+            placeholder="やることを入力"
+            onChange={ListAdd}
+          />
+          <button onClick={Add}>追加する</button>
+          <ul>
+            {
+              todoList.map((todo,i) => (
+                <li key={i}>{todo}</li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    );
+  };
+
+  
+const root = document.getElementById('root');
+ReactDOM.render(<TodoApp />, root);
+
+  </script>
+</body>
+</html>
